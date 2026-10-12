@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>泰時刻客製代購</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="wrap">
+
+<header class="hero">
+  <span class="eyebrow">泰時刻　客製代購</span>
+  <h1>代購費用，<br>分<em>兩段</em>付清</h1>
+  <p class="lead">想從泰國帶東西回來？先私訊泰時刻確認能不能代購，也確認下次商品集運回來的時間。代購目前會跟泰時刻其他商品一起集運回台灣。</p>
+  <p class="lead">再看這一頁：你要付哪些錢、什麼時候付、整個流程怎麼走。</p>
+  <div class="cta-row">
+    <a class="btn" href="order.html">已確認可代購，前往填表</a>
+    <a class="btn ghost" href="#calc">先試算費用</a>
+  </div>
+  <div class="contact">
+    <span>有問題可私訊 <a href="https://www.instagram.com/thaiskrthai/" target="_blank" rel="noopener">IG @thaiskrthai</a>，或來信：</span>
+    <code id="mail">thaiskr555@gmail.com</code>
+  </div>
+</header>
+
+<section id="fees">
+  <div class="sec-head">
+    <h2>兩段費用，各付各的</h2>
+    <p>商品先付，國際運費到貨後在平台下單時付。</p>
+  </div>
+  <div class="stages">
+    <article class="stage s1">
+      <div class="stage-top"><span class="no">1</span><span class="nm">第一段</span></div>
+      <div class="stage-body">
+        <h3>商品代購金額</h3>
+        <span class="when">先匯款</span>
+        <p>確認可代購、報價之後，請先匯這筆商品金額，泰時刻才會開始幫你採購。</p>
+      </div>
+    </article>
+    <article class="stage s2">
+      <div class="stage-top"><span class="no">2</span><span class="nm">第二段</span></div>
+      <div class="stage-body">
+        <h3>國際運費（下單金額）</h3>
+        <span class="when">商品到台灣後，下單時付</span>
+        <p>商品到台灣、秤重後，泰時刻會通知你下單。下單的金額就是「泰國寄到台灣」的國際運費，依商品重量計算。蝦皮平台抽成較高，所以蝦皮的費率稍高一點；但選蝦皮下單時，可以使用蝦皮平台的優惠（例如折價券、免運券，依蝦皮當時的活動與你的資格而定）。</p><p>賣貨便：找到自己的名字下單。蝦皮：到客製化補運費商品頁，數量輸入國際運費的金額再下單。</p>
+        <p>下單時平台另收的出貨運費，由買家自付。</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="calc">
+  <div class="sec-head">
+    <h2>先算算看這單要付多少</h2>
+    <p>已先帶入範例數字，直接改成你的商品金額和預估重量就可以。國際運費以商品實際重量為準，此處僅供預估。</p>
+  </div>
+  <div class="calc">
+    <div class="panel">
+      <div class="field">
+        <label for="item">商品金額（NT$）</label>
+        <input id="item" type="number" inputmode="decimal" min="0" value="1000">
+      </div>
+      <div class="field">
+        <label for="weight">預估重量（公斤）</label>
+        <input id="weight" type="number" inputmode="decimal" min="0" step="0.1" value="0.5">
+      </div>
+      <div class="field">
+        <span class="lbl" id="platLbl">出貨平台</span>
+        <div class="seg" role="group" aria-labelledby="platLbl">
+          <button type="button" id="pMy" aria-pressed="true">賣貨便</button>
+          <button type="button" id="pSh" aria-pressed="false">蝦皮</button>
+        </div>
+      </div>
+      <div class="field" id="shopeeBox" hidden>
+        <label for="shopee">蝦皮運費（NT$）</label>
+        <input id="shopee" type="number" inputmode="decimal" min="0" placeholder="依你選的寄送方式填入">
+        <span class="hint">不填的話，合計會先不含這一項。</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="rows">
+        <div class="row r1"><span class="n">1</span><span class="t"><b>商品代購金額</b><span>先匯款</span></span><span class="v" id="v1"></span></div>
+        <div class="row r2"><span class="n">2</span><span class="t"><b>國際運費（下單金額）</b><span id="rateText"></span></span><span class="v" id="v2"></span></div>
+        <div class="row r3"><span class="n">＋</span><span class="t"><b>平台出貨運費</b><span id="fee3Text"></span></span><span class="v" id="v3"></span></div>
+      </div>
+      <div class="total"><b id="totalLbl">合計</b><span class="v" id="vt"></span></div>
+      <p class="hint">特殊體積的商品無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="sec-head">
+    <h2>下單流程</h2>
+    <p>先確認，再填表、匯款，到貨後才出貨。</p>
+  </div>
+  <ol class="flow">
+    <li class="me">
+      <div class="rail"><span class="dot">1</span><span class="stem"></span></div>
+      <div class="c"><span class="who">客人</span><h3>私訊泰時刻</h3><p>附上想代購的商品連結或圖片。</p></div>
+    </li>
+    <li class="shop">
+      <div class="rail"><span class="dot">2</span><span class="stem"></span></div>
+      <div class="c"><span class="who">泰時刻</span><h3>確認能不能代購</h3><p>算出商品價錢，並告知下次商品集運回來的時間。</p><p class="note"><b>集運：</b>代購目前會跟泰時刻其他商品一起集運回台灣。</p><p class="note"><b>無法代購時：</b>流程到此結束。</p></div>
+    </li>
+    <li class="me">
+      <div class="rail"><span class="dot">3</span><span class="stem"></span></div>
+      <div class="c"><span class="who">客人</span><h3>填寫代購表單</h3><p>確認價格之後，再填「泰時刻客製代購」表單。</p><a class="btn" href="order.html">前往代購表單</a></div>
+    </li>
+    <li class="me">
+      <div class="rail"><span class="dot">4</span><span class="stem"></span></div>
+      <div class="c"><span class="who">客人</span><h3>匯款第一段</h3><p>先匯「商品代購金額」給泰時刻。</p></div>
+    </li>
+    <li class="shop">
+      <div class="rail"><span class="dot">5</span><span class="stem"></span></div>
+      <div class="c"><span class="who">泰時刻</span><h3>開始採購</h3><p>收到款項後採購，商品寄回台灣。</p><p class="note"><b>採購失敗時：</b>會退款給客人。</p></div>
+    </li>
+    <li class="shop">
+      <div class="rail"><span class="dot">6</span><span class="stem"></span></div>
+      <div class="c"><span class="who">泰時刻</span><h3>到貨、秤重、上架</h3><p>賣貨便會上架商品，蝦皮則通知客人到補運費專區下單。</p><p class="note"><b>特殊體積：</b>無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p></div>
+    </li>
+    <li class="me">
+      <div class="rail"><span class="dot">7</span><span class="stem"></span></div>
+      <div class="c"><span class="who">客人</span><h3>下單付國際運費</h3><p>下單金額就是第二段國際運費，另外自付平台的出貨運費。</p><p><b>賣貨便：</b>找到自己的名字下單。</p><p><b>蝦皮：</b>到客製化補運費商品頁，數量輸入國際運費的金額，再下單出貨。</p><a class="btn" href="https://shopee.tw/%E6%B3%B0%E5%9C%8B%E5%AE%A2%E8%A3%BD%E5%8C%96%E4%BB%A3%E8%B3%BC%E8%A3%9C%E9%81%8B%E8%B2%BB%E5%B0%88%E5%8D%80(%E8%AB%8B%E5%85%88%E7%A7%81%E8%A8%8A)-i.14132010.56804428159?extraParams=%7B%22display_model_id%22%3A380415803616%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">前往蝦皮補運費專區</a></div>
+    </li>
+    <li class="shop">
+      <div class="rail"><span class="dot">8</span><span class="stem"></span></div>
+      <div class="c"><span class="who">泰時刻</span><h3>收到訂單才出貨</h3><p>客人收到商品，完成。</p></div>
+    </li>
+  </ol>
+</section>
+
+<div class="cta-row">
+  <a class="btn" href="order.html">填寫代購表單</a>
+</div>
+
+<footer>
+  <span>有任何問題，歡迎私訊 <a href="https://www.instagram.com/thaiskrthai/" target="_blank" rel="noopener">IG @thaiskrthai</a>，或來信 thaiskr555@gmail.com。</span>
+</footer>
+
+</main>
+
+<script>
+(function(){
+  var $ = function(id){ return document.getElementById(id); };
+  var platform = 'myship';
+  function num(v){ var x = parseFloat(v); return isFinite(x) && x > 0 ? x : 0; }
+  function money(x){ return 'NT$ ' + Math.round(x).toLocaleString('en-US'); }
+  function update(){
+    var item = num($('item').value);
+    var w = num($('weight').value);
+    var units = Math.ceil(w * 10 - 1e-9);
+    var shopee = platform === 'shopee';
+    var rate = shopee ? 22 : 18;
+    var ship2 = units * rate;
+    var fee3raw = shopee ? num($('shopee').value) : 38;
+    $('v1').textContent = money(item);
+    $('v2').textContent = money(ship2);
+    $('rateText').textContent = '下單時付，每 0.1 公斤 NT$' + rate;
+    if (shopee && !fee3raw) {
+      $('v3').textContent = '依蝦皮';
+      $('fee3Text').textContent = '依蝦皮運費，請在左邊填入';
+      $('totalLbl').textContent = '合計（未含蝦皮運費）';
+    } else {
+      $('v3').textContent = money(fee3raw);
+      $('fee3Text').textContent = shopee ? '蝦皮運費，下單時付' : '賣貨便運費，下單時付';
+      $('totalLbl').textContent = '合計';
+    }
+    $('vt').textContent = money(item + ship2 + fee3raw);
+  }
+  function pick(p){
+    platform = p;
+    $('pMy').setAttribute('aria-pressed', p === 'myship' ? 'true' : 'false');
+    $('pSh').setAttribute('aria-pressed', p === 'shopee' ? 'true' : 'false');
+    $('shopeeBox').hidden = p !== 'shopee';
+    update();
+  }
+  $('item').addEventListener('input', update);
+  $('weight').addEventListener('input', update);
+  $('shopee').addEventListener('input', update);
+  $('pMy').addEventListener('click', function(){ pick('myship'); });
+  $('pSh').addEventListener('click', function(){ pick('shopee'); });
+  update();
+})();
+</script>
+
+</body>
+</html>

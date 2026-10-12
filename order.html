@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>代購表單｜泰時刻客製代購</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@900&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<main class="wrap">
+
+<header class="hero">
+  <a class="btn ghost" href="index.html">← 回費用說明</a>
+  <h1>代購<em>表單</em></h1>
+  <p class="lead">請先私訊泰時刻，確認能不能代購、商品價錢，以及下次商品集運回來的時間後再填。代購目前會跟泰時刻其他商品一起集運回台灣。填表時會顯示匯款資料，匯款完成後再送出表單。</p>
+</header>
+
+<section id="order">
+  <form class="panel" id="orderForm" novalidate>
+
+    <div class="field">
+      <span class="lbl">下單前請先確認條款 <span class="req">*</span></span>
+      <label class="chk"><input id="f_agree1" type="checkbox" required><span>同意協助訂購商品，無法取消退款，沒有買到會全額退款</span></label>
+      <label class="chk"><input id="f_agree2" type="checkbox" required><span>同意商品在通知到貨後1個月內下單出貨，特殊情形請先告知，若無下單，將釋出給其他人購買，且不可申請退款，請留意自身權益。</span></label>
+    </div>
+
+    <div class="field">
+      <span class="lbl" id="f_platLbl">出貨平台 <span class="req">*</span></span>
+      <div class="seg" role="group" aria-labelledby="f_platLbl">
+        <button type="button" data-plat="賣貨便" aria-pressed="true">賣貨便</button>
+        <button type="button" data-plat="蝦皮" aria-pressed="false">蝦皮</button>
+      </div>
+    </div>
+
+    <p class="hint" id="shopeeHint" hidden>蝦皮下單可使用平台優惠，實際折扣以蝦皮頁面為準。</p>
+
+    <div class="field" id="nameBox">
+      <label for="f_name">姓名（賣貨便下單時核對使用） <span class="req">*</span></label>
+      <input id="f_name" type="text" required autocomplete="name">
+    </div>
+
+    <div class="field">
+      <label for="f_contact">到貨時通知的社群媒體或聯繫方式（ex: IG 帳號 / 信箱，擇一填寫） <span class="req">*</span></label>
+      <input id="f_contact" type="text" required>
+    </div>
+
+    <div id="items">
+      <fieldset class="item" data-item>
+        <legend>商品 1</legend>
+        <div class="field"><label>商品名稱 <span class="req">*</span></label><input data-k="product" type="text" required></div>
+        <div class="grid-qty">
+          <div class="field"><label>數量 <span class="req">*</span></label><input data-k="qty" type="number" min="1" step="1" value="1" inputmode="numeric" required></div>
+          <div class="field"><label>報價的單件商品金額（NT$） <span class="req">*</span></label><input data-k="price" type="number" min="0" inputmode="decimal" required></div>
+        </div>
+        <button type="button" class="copy rm" hidden>移除此商品</button>
+      </fieldset>
+    </div>
+    <div class="cta-row">
+      <button class="btn ghost" type="button" id="addItem">＋ 新增商品</button>
+      <span class="hint">請先填完目前的商品，才能新增下一個。</span>
+    </div>
+    <div class="total"><b>匯款總金額（第一段）</b><output class="v" id="grand">NT$ 0</output></div>
+    <p class="hint">＝ 各商品「單件金額 × 數量」加總。國際運費不含在內，到貨後在平台下單時付。</p>
+
+    <!-- 匯款資料從試算表的「設定」分頁載入，不寫在網頁裡 -->
+    <dl class="bank" id="bankBox">
+      <div><dt>銀行</dt><dd id="bankName">載入中…</dd></div>
+      <div><dt>帳號</dt><dd id="bankAcct">載入中…</dd></div>
+    </dl>
+    <p class="hint">請依上方匯款總金額匯款，匯完後在下面填寫匯款帳號後五碼。</p>
+
+    <div class="field"><label for="f_last5">匯款帳號後五碼 <span class="req">*</span></label><input id="f_last5" type="text" required maxlength="5" pattern="[0-9]{5}" inputmode="numeric" title="請輸入 5 位數字"></div>
+    <div class="field"><label for="f_note">備註</label><textarea id="f_note"></textarea></div>
+    <div class="hp" aria-hidden="true"><label>勿填<input id="f_hp" type="text" tabindex="-1" autocomplete="off"></label></div>
+    <div class="cta-row">
+      <button class="btn" type="submit" id="submitBtn">送出代購表單</button>
+      <span id="formMsg" role="status"></span>
+    </div>
+  </form>
+  <div class="done" id="doneBox" role="status" tabindex="-1" hidden>
+    <h2>表單已送出</h2>
+    <p>請<b>私訊泰時刻，告知你已送出表單、完成匯款</b>。</p>
+    <div class="total"><b>匯款總金額</b><span class="v" id="doneTotal"></span></div>
+    <a class="btn" href="https://www.instagram.com/thaiskrthai/" target="_blank" rel="noopener">私訊 IG @thaiskrthai</a>
+  </div>
+</section>
+
+<footer>
+  <span>有任何問題，歡迎私訊 <a href="https://www.instagram.com/thaiskrthai/" target="_blank" rel="noopener">IG @thaiskrthai</a>，或來信 thaiskr555@gmail.com。</span>
+</footer>
+
+</main>
+
+<script src="config.js"></script>
+<script>
+(function(){
+  // Apps Script 網址放在 config.js
+  var ENDPOINT = (window.SITE_CONFIG || {}).ENDPOINT || '';
+  var $ = function(id){ return document.getElementById(id); };
+  var form = $('orderForm'), items = $('items'), addBtn = $('addItem');
+  var plat = '賣貨便';
+  var platBtns = form.querySelectorAll('.seg button');
+
+  // 姓名只在賣貨便顯示（也只在賣貨便必填）
+  function setPlat(p){
+    plat = p;
+    platBtns.forEach(function(x){ x.setAttribute('aria-pressed', x.getAttribute('data-plat') === p ? 'true' : 'false'); });
+    $('nameBox').hidden = p !== '賣貨便';
+    $('shopeeHint').hidden = p !== '蝦皮';
+    $('f_name').required = p === '賣貨便';
+  }
+  platBtns.forEach(function(b){ b.addEventListener('click', function(){ setPlat(b.getAttribute('data-plat')); }); });
+
+  // 從 Apps Script 讀取匯款資料（試算表「設定」分頁）；失敗時請客人私訊取得
+  function bankFail(){
+    $('bankName').textContent = '資料載入失敗，請私訊泰時刻取得匯款資料';
+    $('bankAcct').textContent = '—';
+  }
+  if (!ENDPOINT) { bankFail(); }
+  else {
+    fetch(ENDPOINT)
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d || !d.ok || !d.bank || !d.account) { bankFail(); return; }
+        $('bankName').textContent = d.bank;
+        $('bankAcct').textContent = d.account;
+      })
+      .catch(bankFail);
+  }
+
+  function msg(t, err){ var m = $('formMsg'); m.textContent = t; m.className = err ? 'err' : ''; }
+
+  function itemBoxes(){ return items.querySelectorAll('[data-item]'); }
+  function money(x){ return 'NT$ ' + Math.round(x).toLocaleString('en-US'); }
+  function recalc(){
+    var sum = 0;
+    itemBoxes().forEach(function(box){
+      var q = parseFloat(box.querySelector('[data-k=qty]').value) || 0;
+      var p = parseFloat(box.querySelector('[data-k=price]').value) || 0;
+      sum += q * p;
+    });
+    $('grand').textContent = money(sum);
+    return sum;
+  }
+  function renumber(){
+    var boxes = itemBoxes();
+    boxes.forEach(function(box, i){
+      box.querySelector('legend').textContent = '商品 ' + (i + 1);
+      box.querySelector('.rm').hidden = boxes.length < 2; // 只剩一個商品時不顯示移除
+    });
+  }
+  items.addEventListener('click', function(e){
+    var rm = e.target.closest('.rm');
+    if (!rm || itemBoxes().length < 2) return;
+    rm.closest('[data-item]').remove();
+    renumber(); recalc();
+  });
+  items.addEventListener('input', recalc);
+
+  // 目前所有商品都填完才能新增下一個
+  addBtn.addEventListener('click', function(){
+    var inputs = items.querySelectorAll('input');
+    for (var i = 0; i < inputs.length; i++) {
+      if (!inputs[i].checkValidity()) { inputs[i].reportValidity(); return; }
+    }
+    var c = itemBoxes()[0].cloneNode(true);
+    c.querySelectorAll('input').forEach(function(i){ i.value = i.getAttribute('data-k') === 'qty' ? '1' : ''; });
+    items.appendChild(c);
+    renumber();
+    c.querySelector('input').focus();
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    if (!ENDPOINT) { msg('尚未設定 Apps Script 網址', true); return; }
+    var list = [];
+    itemBoxes().forEach(function(box){
+      var o = {};
+      box.querySelectorAll('[data-k]').forEach(function(i){ o[i.getAttribute('data-k')] = i.value; });
+      list.push(o);
+    });
+    var data = {
+      platform: plat, name: plat === '賣貨便' ? $('f_name').value : '', contact: $('f_contact').value,
+      last5: $('f_last5').value, note: $('f_note').value,
+      items: list, agreed: $('f_agree1').checked && $('f_agree2').checked, website: $('f_hp').value
+    };
+    var paid = recalc();
+    $('doneBox').hidden = true;
+    $('submitBtn').disabled = true; msg('送出中…');
+    // text/plain 避免 CORS 預檢；no-cors 下讀不到回應，送出沒丟錯就視為成功
+    fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(data) })
+      .then(function(){
+        form.reset(); setPlat('賣貨便');
+        itemBoxes().forEach(function(b, i){ if (i > 0) b.remove(); });
+        renumber(); recalc();
+        msg('');
+        $('doneTotal').textContent = money(paid);
+        $('doneBox').hidden = false;
+        $('doneBox').scrollIntoView({behavior: 'smooth', block: 'center'});
+        $('doneBox').focus();
+      })
+      .catch(function(){ msg('送出失敗，請檢查網路後再試，或直接私訊泰時刻', true); })
+      .then(function(){ $('submitBtn').disabled = false; });
+  });
+})();
+</script>
+
+</body>
+</html>
