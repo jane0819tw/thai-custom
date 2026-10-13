@@ -101,7 +101,11 @@
   var ENDPOINT = (window.SITE_CONFIG || {}).ENDPOINT || '';
   var $ = function(id){ return document.getElementById(id); };
   var form = $('orderForm'), items = $('items'), addBtn = $('addItem');
-  var plat = '賣貨便';
+  // 網址參數 ?platform= 決定顯示哪些平台：預設只顯示蝦皮；myship 只顯示賣貨便；all 兩個都顯示
+  var mode = (new URLSearchParams(location.search).get('platform') || '').toLowerCase();
+  if (mode !== 'myship' && mode !== 'all') mode = 'shopee';
+  var defaultPlat = mode === 'myship' ? '賣貨便' : '蝦皮';
+  var plat = defaultPlat;
   var platBtns = form.querySelectorAll('.seg button');
 
   // 姓名只在賣貨便顯示（也只在賣貨便必填）
@@ -112,7 +116,12 @@
     $('shopeeHint').hidden = p !== '蝦皮';
     $('f_name').required = p === '賣貨便';
   }
-  platBtns.forEach(function(b){ b.addEventListener('click', function(){ setPlat(b.getAttribute('data-plat')); }); });
+  platBtns.forEach(function(b){
+    var p = b.getAttribute('data-plat');
+    b.hidden = mode === 'shopee' ? p !== '蝦皮' : mode === 'myship' ? p !== '賣貨便' : false;
+    b.addEventListener('click', function(){ setPlat(p); });
+  });
+  setPlat(defaultPlat);
 
   // 從 Apps Script 讀取匯款資料（試算表「設定」分頁）；失敗時請客人私訊取得
   function bankFail(){
@@ -194,7 +203,7 @@
     // text/plain 避免 CORS 預檢；no-cors 下讀不到回應，送出沒丟錯就視為成功
     fetch(ENDPOINT, { method: 'POST', mode: 'no-cors', headers: {'Content-Type': 'text/plain;charset=utf-8'}, body: JSON.stringify(data) })
       .then(function(){
-        form.reset(); setPlat('賣貨便');
+        form.reset(); setPlat(defaultPlat);
         itemBoxes().forEach(function(b, i){ if (i > 0) b.remove(); });
         renumber(); recalc();
         msg('');

@@ -7,6 +7,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&family=Noto+Serif+TC:wght@900&display=swap">
 <link rel="stylesheet" href="style.css">
+<script>
+// ?platform= 決定顯示哪些平台：預設只顯示蝦皮；myship 只顯示賣貨便；all 兩個都顯示
+(function(){
+  var m = (new URLSearchParams(location.search).get('platform') || '').toLowerCase();
+  document.documentElement.setAttribute('data-mode', m === 'myship' || m === 'all' ? m : 'shopee');
+})();
+</script>
 </head>
 <body>
 
@@ -18,7 +25,7 @@
   <p class="lead">想從泰國帶東西回來？先私訊泰時刻確認能不能代購，也確認下次商品集運回來的時間。代購目前會跟泰時刻其他商品一起集運回台灣。</p>
   <p class="lead">再看這一頁：你要付哪些錢、什麼時候付、整個流程怎麼走。</p>
   <div class="cta-row">
-    <a class="btn" href="order.html">已確認可代購，前往填表</a>
+    <a class="btn" href="order.html" data-order>已確認可代購，前往填表</a>
     <a class="btn ghost" href="#calc">先試算費用</a>
   </div>
   <div class="contact">
@@ -46,7 +53,12 @@
       <div class="stage-body">
         <h3>國際運費（下單金額）</h3>
         <span class="when">商品到台灣後，下單時付</span>
-        <p>商品到台灣、秤重後，泰時刻會通知你下單。下單的金額就是「泰國寄到台灣」的國際運費，依商品重量計算。蝦皮平台抽成較高，所以蝦皮的費率稍高一點；但選蝦皮下單時，可以使用蝦皮平台的優惠（例如折價券、免運券，依蝦皮當時的活動與你的資格而定）。</p><p>賣貨便：找到自己的名字下單。蝦皮：到客製化補運費商品頁，數量輸入國際運費的金額再下單。</p>
+        <p>商品到台灣、秤重後，泰時刻會通知你下單。下單的金額就是「泰國寄到台灣」的國際運費，依商品重量計算。</p>
+        <p data-m="all">蝦皮平台抽成較高，所以蝦皮的費率稍高一點；但選蝦皮下單時，可以使用蝦皮平台的優惠（例如折價券、免運券，依蝦皮當時的活動與你的資格而定）。</p>
+        <p data-m="shopee">下單時可以使用蝦皮平台的優惠（例如折價券、免運券，依蝦皮當時的活動與你的資格而定）。</p>
+        <p data-m="all">賣貨便：找到自己的名字下單。蝦皮：到客製化補運費商品頁，數量輸入國際運費的金額再下單。</p>
+        <p data-m="myship">找到自己的名字下單。</p>
+        <p data-m="shopee">到客製化補運費商品頁，數量輸入國際運費的金額再下單。</p>
         <p>下單時平台另收的出貨運費，由買家自付。</p>
       </div>
     </article>
@@ -68,7 +80,7 @@
         <label for="weight">預估重量（公斤）</label>
         <input id="weight" type="number" inputmode="decimal" min="0" step="0.1" value="0.5">
       </div>
-      <div class="field">
+      <div class="field" data-m="all">
         <span class="lbl" id="platLbl">出貨平台</span>
         <div class="seg" role="group" aria-labelledby="platLbl">
           <button type="button" id="pMy" aria-pressed="true">賣貨便</button>
@@ -88,7 +100,7 @@
         <div class="row r3"><span class="n">＋</span><span class="t"><b>平台出貨運費</b><span id="fee3Text"></span></span><span class="v" id="v3"></span></div>
       </div>
       <div class="total"><b id="totalLbl">合計</b><span class="v" id="vt"></span></div>
-      <p class="hint">特殊體積的商品無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p>
+      <p class="hint" data-m="myship all">特殊體積的商品無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p>
     </div>
   </div>
 </section>
@@ -109,7 +121,7 @@
     </li>
     <li class="me">
       <div class="rail"><span class="dot">3</span><span class="stem"></span></div>
-      <div class="c"><span class="who">客人</span><h3>填寫代購表單</h3><p>確認價格之後，再填「泰時刻客製代購」表單。</p><a class="btn" href="order.html">前往代購表單</a></div>
+      <div class="c"><span class="who">客人</span><h3>填寫代購表單</h3><p>確認價格之後，再填「泰時刻客製代購」表單。</p><a class="btn" href="order.html" data-order>前往代購表單</a></div>
     </li>
     <li class="me">
       <div class="rail"><span class="dot">4</span><span class="stem"></span></div>
@@ -121,11 +133,11 @@
     </li>
     <li class="shop">
       <div class="rail"><span class="dot">6</span><span class="stem"></span></div>
-      <div class="c"><span class="who">泰時刻</span><h3>到貨、秤重、上架</h3><p>賣貨便會上架商品，蝦皮則通知客人到補運費專區下單。</p><p class="note"><b>特殊體積：</b>無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p></div>
+      <div class="c"><span class="who">泰時刻</span><h3>到貨、秤重、上架</h3><p data-m="all">賣貨便會上架商品，蝦皮則通知客人到補運費專區下單。</p><p data-m="myship">商品上架到賣貨便。</p><p data-m="shopee">通知客人到補運費專區下單。</p><p class="note" data-m="myship all"><b>特殊體積：</b>無法用賣貨便寄送，請先與泰時刻確認寄出方式。</p></div>
     </li>
     <li class="me">
       <div class="rail"><span class="dot">7</span><span class="stem"></span></div>
-      <div class="c"><span class="who">客人</span><h3>下單付國際運費</h3><p>下單金額就是第二段國際運費，另外自付平台的出貨運費。</p><p><b>賣貨便：</b>找到自己的名字下單。</p><p><b>蝦皮：</b>到客製化補運費商品頁，數量輸入國際運費的金額，再下單出貨。</p><a class="btn" href="https://shopee.tw/%E6%B3%B0%E5%9C%8B%E5%AE%A2%E8%A3%BD%E5%8C%96%E4%BB%A3%E8%B3%BC%E8%A3%9C%E9%81%8B%E8%B2%BB%E5%B0%88%E5%8D%80(%E8%AB%8B%E5%85%88%E7%A7%81%E8%A8%8A)-i.14132010.56804428159?extraParams=%7B%22display_model_id%22%3A380415803616%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">前往蝦皮補運費專區</a></div>
+      <div class="c"><span class="who">客人</span><h3>下單付國際運費</h3><p>下單金額就是第二段國際運費，另外自付平台的出貨運費。</p><p data-m="all"><b>賣貨便：</b>找到自己的名字下單。</p><p data-m="myship">找到自己的名字下單。</p><p data-m="all"><b>蝦皮：</b>到客製化補運費商品頁，數量輸入國際運費的金額，再下單出貨。</p><p data-m="shopee">到客製化補運費商品頁，數量輸入國際運費的金額，再下單出貨。</p><a class="btn" data-m="shopee all" href="https://shopee.tw/%E6%B3%B0%E5%9C%8B%E5%AE%A2%E8%A3%BD%E5%8C%96%E4%BB%A3%E8%B3%BC%E8%A3%9C%E9%81%8B%E8%B2%BB%E5%B0%88%E5%8D%80(%E8%AB%8B%E5%85%88%E7%A7%81%E8%A8%8A)-i.14132010.56804428159?extraParams=%7B%22display_model_id%22%3A380415803616%2C%22model_selection_logic%22%3A3%7D" target="_blank" rel="noopener">前往蝦皮補運費專區</a></div>
     </li>
     <li class="shop">
       <div class="rail"><span class="dot">8</span><span class="stem"></span></div>
@@ -135,7 +147,7 @@
 </section>
 
 <div class="cta-row">
-  <a class="btn" href="order.html">填寫代購表單</a>
+  <a class="btn" href="order.html" data-order>填寫代購表單</a>
 </div>
 
 <footer>
@@ -147,7 +159,8 @@
 <script>
 (function(){
   var $ = function(id){ return document.getElementById(id); };
-  var platform = 'myship';
+  var mode = document.documentElement.getAttribute('data-mode');
+  var platform = mode === 'myship' ? 'myship' : 'shopee';
   function num(v){ var x = parseFloat(v); return isFinite(x) && x > 0 ? x : 0; }
   function money(x){ return 'NT$ ' + Math.round(x).toLocaleString('en-US'); }
   function update(){
@@ -184,7 +197,12 @@
   $('shopee').addEventListener('input', update);
   $('pMy').addEventListener('click', function(){ pick('myship'); });
   $('pSh').addEventListener('click', function(){ pick('shopee'); });
-  update();
+  pick(platform);
+
+  // 有帶參數時，通往表單的連結也帶同樣的參數
+  if (mode === 'myship' || mode === 'all') {
+    document.querySelectorAll('a[data-order]').forEach(function(a){ a.href = 'order.html?platform=' + mode; });
+  }
 })();
 </script>
 

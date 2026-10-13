@@ -138,3 +138,7 @@ footer a,.contact a{color:var(--ink);font-weight:700}
 .done .total{align-self:stretch}
 .bank{font-size:14px}
 .item .rm[hidden]{display:none}
+.seg button[hidden]{display:none}
+html[data-mode="shopee"] [data-m]:not([data-m~="shopee"]),
+html[data-mode="myship"] [data-m]:not([data-m~="myship"]),
+html[data-mode="all"] [data-m]:not([data-m~="all"]){display:none!important}
